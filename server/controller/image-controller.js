@@ -8,15 +8,20 @@ export const uploadImage = async (request,response) => {
             name: request.file.originalname
         }
 
-    try {
-        const file = await File.create(fileObj);
-        console.log(file);
-        response.status(200).json({ path: `http://localhost:8000/file/${file._id}`})
-    }
-    catch (error){
-        console.error(error.message);
-        response.status(500).json({ error: error.message})
-    }
+
+        try {
+            const file = await File.create(fileObj);
+            console.log(file);
+    
+            // Dynamically construct the base URL
+            const baseUrl = `${request.protocol}://${request.get('host')}`;
+    
+            // Send the full file path in the response
+            response.status(200).json({ path: `${baseUrl}/file/${file._id}` });
+        } catch (error) {
+            console.error(error.message);
+            response.status(500).json({ error: error.message });
+        }
 
 }
 
