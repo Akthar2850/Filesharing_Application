@@ -12,13 +12,16 @@ app.use('/', router);
 
 const PORT = 8000;
 
-const _dirname = path.resolve();
+const __dirname = path.resolve(); // Correctly using Node's built-in variable
 
 DBConnection();
 
-app.use(express.static(path.join(_dirname, "/client/build")));
-app.get('*', (_,res) => {
-    res.sendFile(path.resolve(_dirname, "client", "build", "index.html"));
-})
+// Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, "/client/build")));
 
-app.listen(PORT,()=> console.log(`Server is running on PORT ${PORT}`));
+// Wildcard route for serving React app for all undefined routes
+app.get('*', (_, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
+app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
