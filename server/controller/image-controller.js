@@ -25,18 +25,25 @@ export const uploadImage = async (request,response) => {
 
 }
 
+
 export const downloadImage = async (request, response) => {
-    try{
+    try {
+        // Find file by ID
         const file = await File.findById(request.params.fileId);
 
-        file.downloadContent++;
+        // Handle case where file is not found
+        if (!file) {
+            return response.status(404).json({ error: 'File not found' });
+        }
 
+        // Increment download count and save
+        file.downloadContent++;
         await file.save();
 
+        // Download the file
         response.download(file.path, file.name);
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error.message);
-        return response.status(500).json({ error: error.message});
+        return response.status(500).json({ error: error.message });
     }
 }
