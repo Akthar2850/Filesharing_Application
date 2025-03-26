@@ -9,25 +9,21 @@ function App() {
 
   const url = 'https://i.pinimg.com/originals/16/46/24/1646243661201a0892cc4b1a64fcbacf.jpg';
 
-  useEffect(() => {
-    const getImage = async () => {
-      if (file) {
-        const data = new FormData();
-        data.append("name", file.name);
-        data.append("file", file);
+// client/src/App.js (inside the component)
+useEffect(() => {
+  const getImage = async () => {
+    if (file) {
+      const data = new FormData();
+      data.append("name", file.name);
+      data.append("file", file);
 
-        const response = await uploadFile(data);
-        console.log("Upload response:", response);
+      const response = await uploadFile(data);
+      setResult(response.path);
+    }
+  };
+  getImage();
+}, [file]);
 
-        if (response?.path) {
-          setResult(response.path);
-        } else {
-          console.error("Upload failed or response.path is undefined:", response);
-        }
-      }
-    };
-    getImage();
-  }, [file]);
 
   const onUploadClick = () => {
     fileInputRef.current.click();
