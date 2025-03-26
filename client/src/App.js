@@ -31,12 +31,12 @@ useEffect(() => {
 
   return (
     <div className='container'>
-      <img src={url} className='img' alt="banner" />
+      <img src={url} className='img' />
       <div className='wrapper'>
         <h1>Simple file sharing!</h1>
         <p>Upload and share the download link.</p>
-
-        <button onClick={onUploadClick}>Upload</button>
+        
+        <button onClick={() => onUploadClick()}>Upload</button>
         <input
           type="file"
           ref={fileInputRef}
