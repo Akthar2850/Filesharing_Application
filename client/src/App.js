@@ -44,14 +44,7 @@ useEffect(() => {
           onChange={(e) => setFile(e.target.files[0])}
         />
 
-        {result && (
-          <div className="result-box">
-            <p>Your download link:</p>
-            <input type="text" readOnly value={result} />
-            <button onClick={() => navigator.clipboard.writeText(result)}>Copy Link</button>
-            <a href={result} target='_blank' rel='noreferrer'>Download</a>
-          </div>
-        )}
+        <a href={result} target='_blank'>{result}</a> 
       </div>
     </div>
   );
